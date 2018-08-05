@@ -1,0 +1,99 @@
+﻿@page
+@model AirportExplorer.Pages.IndexModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Airport Explorer</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.css" rel="stylesheet" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v0.47.0/mapbox-gl.js"></script>
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:absolute; top:0; bottom:0; width:100%; }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+
+<script>
+    mapboxgl.accessToken = '@Model.MapboxAccessToken';
+    var map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v10'
+    });
+
+    var nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'bottom-right');
+
+    map.on('load',
+        () => {
+            var popup = new mapboxgl.Popup({
+                closeButton: false,
+                closeOnClick: false
+            
+            map.addSource("airports",
+                {
+                    type: "geojson",
+                    data: "?handler=airports",
+                    cluster: true,
+                    clusterMaxZoom: 14, // Max zoom to cluster points on
+                    clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+                });
+        
+            map.addLayer({
+                id: "airport",
+                type: "circle",
+                source: "airports",
+                filter: ["!has", "point_count"],
+                paint: {
+                    'circle-color': "#1EF008",
+                    'circle-radius': 6,
+                    'circle-stroke-width': 1,
+                    'circle-stroke-color': "#fff"
+                }
+            });
+            
+            map.addLayer({
+                id: 'clusters',
+                type: 'circle',
+                source: 'airports',
+                filter: ['has', 'point_count'],
+                paint: {
+                    'circle-color': {
+                        property: 'point_count',
+                        type: 'interval',
+                        stops: [
+                            [0, '#41A337'],
+                            [100, '#2D7026'],
+                            [750, '#0B5703'],
+                        ]
+                    },
+                    'circle-radius': {
+                        property: 'point_count',
+                        type: 'interval',
+                        stops: [
+                            [0, 20],
+                            [100, 30],
+                            [750, 40]
+                        ]
+                    }
+                }
+            });
+            
+            map.addLayer({
+                id: 'cluster-count',
+                type: 'symbol',
+                source: 'airports',
+                filter: ['has', 'point_count'],
+                layout: {
+                    'text-field': '{point_count}',
+                    'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
+                    'text-size': 12
+                }
+            });
+        });
+</script>
+</body>
+</html>

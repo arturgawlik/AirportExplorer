@@ -1,0 +1,57 @@
+﻿{
+  "version": "1.0.0",
+  "restore": {
+    "projectUniqueName": "/Users/arturgawlik/Documents/ProgramowanieDotNet/AirportExplorer/AirportExplorer/AirportExplorer.csproj",
+    "projectName": "AirportExplorer",
+    "projectPath": "/Users/arturgawlik/Documents/ProgramowanieDotNet/AirportExplorer/AirportExplorer/AirportExplorer.csproj",
+    "outputPath": "/Users/arturgawlik/Documents/ProgramowanieDotNet/AirportExplorer/AirportExplorer/obj/",
+    "projectStyle": "PackageReference",
+    "fallbackFolders": [
+      "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
+    ],
+    "originalTargetFrameworks": [
+      "netcoreapp2.1"
+    ],
+    "frameworks": {
+      "netcoreapp2.1": {
+        "projectReferences": {}
+      }
+    },
+    "warningProperties": {
+      "warnAsError": [
+        "NU1605"
+      ]
+    }
+  },
+  "frameworks": {
+    "netcoreapp2.1": {
+      "dependencies": {
+        "CsvHelper": {
+          "target": "Package",
+          "version": "[8.0.0-beta01, )"
+        },
+        "GeoJSON.Net": {
+          "target": "Package",
+          "version": "[1.1.64, )"
+        },
+        "Microsoft.AspNetCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.1.1, )",
+          "autoReferenced": true
+        },
+        "Microsoft.NETCore.App": {
+          "suppressParent": "All",
+          "target": "Package",
+          "version": "[2.1.0, )",
+          "autoReferenced": true
+        }
+      },
+      "imports": [
+        "net461"
+      ],
+      "assetTargetFallback": true,
+      "warn": true
+    }
+  }
+}
